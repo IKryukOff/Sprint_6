@@ -1,5 +1,3 @@
-from time import sleep
-
 import allure
 import pytest
 from data.home_page_faq import FAQ
@@ -21,7 +19,7 @@ class TestHomePage:
         home_page = HomePage(driver=driver)
         home_page.click_faq_question(question_number=question_number)
 
-        assert home_page.find_element(home_page.faq_answer).text == expected_answer
+        assert home_page.get_displayed_answer_text() == expected_answer
 
     @allure.sub_suite('Тестирование перехода на страницу оформления заказа')
     @allure.title('Проверка перехода на страницу оформления заказа через кнопку в шапке страницы')
@@ -61,6 +59,5 @@ class TestHomePage:
         home_page = HomePage(driver=driver)
         home_page.click_yandex_logo()
         home_page.switch_to_last_tab()
-        sleep(3)
 
-        assert Urls.dzen_page in home_page.current_url()
+        assert home_page.is_dzen_page_opened()

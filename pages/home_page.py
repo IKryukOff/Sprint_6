@@ -5,7 +5,7 @@ from pages.base_page import BasePage
 from selenium.webdriver.firefox.webdriver import WebDriver
 
 
-class HomePage(BasePage, HomePageLocator):
+class HomePage(BasePage):
     def __init__(self, driver: WebDriver):
         super().__init__(driver)
         self.driver_get_url(Urls.home_page)
@@ -13,12 +13,16 @@ class HomePage(BasePage, HomePageLocator):
 
     @allure.step('Нажать на {question_number}-й вопрос')
     def click_faq_question(self, question_number: int) -> None:
-        self.find_elements(self.faq_questions)[question_number - 1].click()
+        self.find_elements(HomePageLocator.faq_questions)[question_number - 1].click()
+
+    @allure.step('Получить текст отображаемого ответа')
+    def get_displayed_answer_text(self) -> str:
+        return self.find_element(HomePageLocator.faq_answer).text
 
     @allure.step('Нажать на кнопку "Заказать" в шапке страницы')
     def click_header_order_button(self) -> None:
-        self.find_element(self.header_order_button).click()
+        self.find_element(HomePageLocator.header_order_button).click()
 
     @allure.step('Нажать на кнопку "Заказать" на основной странице')
     def click_home_order_button(self) -> None:
-        self.find_element(self.home_order_button).click()
+        self.find_element(HomePageLocator.home_order_button).click()
